@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoParts - Магазин автозапчастей</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Навигация */
+        nav {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b35;
+        }
+
+        /* Главный контент */
+        main {
+            padding: 2rem 0;
+        }
+
+        /* Форма выхода */
+        .logout-form {
+            display: inline;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: inherit;
+            font-family: inherit;
+            padding: 0;
+            transition: color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            color: #ff6b35;
+        }
+
+        /* Промо-блоки */
+        .promo-section {
+            margin-bottom: 3rem;
+        }
+
+        .promo-card {
+            background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #ff6b35;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .promo-card.cashback {
+            border-left-color: #4CAF50;
+        }
+
+        .promo-card.discount {
+            border-left-color: #ff4444;
+        }
+
+        .promo-card h1 {
+            color: #4CAF50;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .promo-card h2 {
+            color: #ff4444;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .promo-subtitle {
+            color: #cccccc;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .promo-note {
+            background: rgba(255, 107, 53, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-style: italic;
+            color: #ff6b35;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        /* Сетка товаров */
+        .products-section h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #ff6b35;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: #ff6b35;
+        }
+
+        .product-card h4 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .product-item {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .product-item:hover {
+            background: rgba(255, 107, 53, 0.2);
+        }
+
+        /* Футер */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid #333;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+            color: #888;
+        }
+
+        /* Формы */
+        .form-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: #ff6b35;
+            margin-bottom: 1.5rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c35 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Сообщения */
+        .messages {
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .message.success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+
+        .message.error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .promo-card h1 {
+                font-size: 1.8rem;
+            }
+
+            .promo-card h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container nav-container">
+            <a href="{% url 'home' %}" class="logo">AUTO PARTS</a>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Главная</a></li>
+                <li><a href="{% url 'about' %}">О магазине</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">Профиль</a></li>
+                    <li>
+                        <form method="post" action="{% url 'logout' %}" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn">Выйти</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Войти</a></li>
+                    <li><a href="{% url 'register' %}">Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <p>Телефон: +7 (999) 123-45-67</p>
+                    <p>Email: info@autoparts.ru</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Адрес</h4>
+                    <p>г. Москва, ул. Автозапчастей, 123</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Режим работы</h4>
+                    <p>Пн-Пт: 9:00-21:00</p>
+                    <p>Сб-Вс: 10:00-20:00</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AutoParts. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
