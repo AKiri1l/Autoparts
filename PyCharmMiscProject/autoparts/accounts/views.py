@@ -61,6 +61,7 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 
+# ДОБАВЬТЕ ЭТУ ФУНКЦИЮ - она отсутствует
 def logout_view(request):
     logout(request)
     messages.success(request, 'Вы успешно вышли из системы.')

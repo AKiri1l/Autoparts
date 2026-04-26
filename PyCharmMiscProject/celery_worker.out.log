@@ -1,0 +1,19 @@
+ 
+ -------------- celery@DESKTOP-M1AKATE v5.6.3 (recovery)
+--- ***** ----- 
+-- ******* ---- Windows-11-10.0.26200-SP0 2026-04-23 23:28:30
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         autoparts:0x2361ef34050
+- ** ---------- .> transport:   redis://127.0.0.1:6379/0
+- ** ---------- .> results:     disabled://
+- *** --- * --- .> concurrency: 16 (solo)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . accounts.tasks.send_profile_reminder
+

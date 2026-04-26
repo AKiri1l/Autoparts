@@ -1,0 +1,4 @@
+[2026-04-23 23:28:30,774: INFO/MainProcess] Connected to redis://127.0.0.1:6379/0
+[2026-04-23 23:28:30,775: INFO/MainProcess] mingle: searching for neighbors
+[2026-04-23 23:28:31,783: INFO/MainProcess] mingle: all alone
+[2026-04-23 23:28:31,790: INFO/MainProcess] celery@DESKTOP-M1AKATE ready.

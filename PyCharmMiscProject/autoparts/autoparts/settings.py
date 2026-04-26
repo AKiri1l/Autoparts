@@ -1,18 +1,24 @@
+"""
+Django settings for autoparts project.
+"""
+
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-your-secret-key-here'
 
+# Включите DEBUG для отладки
 DEBUG = True
 
+# Добавьте домен RemoteIt в разрешенные хосты
 ALLOWED_HOSTS = [
-    'msi-http.at.remote.it',
+    'desktop-m1akate-http.at.remote.it',  # Ваш домен от RemoteIt
     'localhost',
     '127.0.0.1',
     '0.0.0.0',
-    '.at.remote.it',
-    '.remote.it',
+    '.at.remote.it',  # Все поддомены at.remote.it
+    '.remote.it',     # Все поддомены remote.it
 ]
 
 INSTALLED_APPS = [
@@ -62,7 +68,20 @@ DATABASES = {
     }
 }
 
-AUTH_PASSWORD_VALIDATORS = []
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 LANGUAGE_CODE = 'ru-ru'
 TIME_ZONE = 'Europe/Moscow'
@@ -77,14 +96,16 @@ LOGOUT_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
+# КРИТИЧЕСКИ ВАЖНО: Добавьте эти настройки для CSRF
 CSRF_TRUSTED_ORIGINS = [
-    'http://msi-http.at.remote.it:33000',
+    'https://desktop-m1akate-http.at.remote.it:33000',
+    'http://desktop-m1akate-http.at.remote.it:33000',
 ]
 
-CSRF_COOKIE_SECURE = False      # куки CSRF по HTTP
-SESSION_COOKIE_SECURE = False   # сессионные куки по HTTP
-CSRF_COOKIE_SAMESITE = 'Lax'    # отправка кук между сайтами
-CSRF_USE_SESSIONS = False       # куки для CSRF (не сессии)
-CSRF_COOKIE_HTTPONLY = False    # CSRF-токен
+# Для работы через HTTPS (RemoteIt использует HTTPS)
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+# Для работы через прокси RemoteIt
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
